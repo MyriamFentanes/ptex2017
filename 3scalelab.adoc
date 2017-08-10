@@ -1,0 +1,49 @@
+3scale Lab
+==========
+
+Environment Preparation
+-----------------------
+- RHPDS Login - https://rhpds.redhat.com
+- Navigate: Services -> Catalogs -> Labs -> 3scale OpenShift
+- Wait for your provisioning confirmation email which contains the "guid"
+
+Initial Login
+-------------
+- Login to your openshift environment - https://master-{guid}.oslab.opentlc.com:8443
+- Credentials: 
+  .. Username: `developer`
+  .. Password: `developer`
+
+OpenShift Deploy Customers Service
+----------------------------------
+- New Project: `customers`
+- Add To Project
+- Import YAML/JSON - the following templates
+  .. https://raw.githubusercontent.com/kenthua/node-customers/demo/mysql-customer-persistent.yml
+  .. https://raw.githubusercontent.com/kenthua/node-customers/demo/nodejs-template.yml
+- Process -> Create ...
+
+OpenShift Deploy 3scale
+-----------------------
+- Create new project: `3scale-amp`
+- Add To Project
+- Import YAML/JSON
+  .. https://raw.githubusercontent.com/kenthua/3scale-amp-openshift-templates/2.0.0.GA-redhat-2-rhpds/amp/amp.yml
+- Create -> Process template -> Continue -> Add Parameters
+  .. `WILDCARD_DOMAIN=amp.cloudapps-{guid}.oslab.opentl.com`
+  .. `ADMIN_PASSWORD=passw0rd` 
+- Create
+- Wait for the pods to come up
+
+TIP: apicast production sometimes does not come up because system-app (system-provider & system-developer) are having issues.
+
+OpenShift Access 3scale
+-----------------------
+- There is a route called: https://3scale-admin.amp.cloudapps-{guid}.oslab.opentlc.com
+- Login
+  .. Username: `admin`
+  .. Password: `passw0rd`
+
+3Scale: Modify the service to include your customer api
+-------------------------------------------------------
+
