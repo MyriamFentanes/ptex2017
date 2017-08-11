@@ -11,27 +11,31 @@ Initial Login
 -------------
 - Login to your openshift environment - https://master-{guid}.oslab.opentlc.com:8443
 - Credentials: 
-  .. Username: `developer`
-  .. Password: `developer`
+ .. Username: `developer`
+ .. Password: `developer`
 
 OpenShift Deploy Customers Service
 ----------------------------------
 - New Project: `customers`
-- Add To Project
-- Import YAML/JSON - the following templates
-  .. https://raw.githubusercontent.com/kenthua/node-customers/demo/mysql-customer-persistent.yml
-  .. https://raw.githubusercontent.com/kenthua/node-customers/demo/nodejs-template.yml
-- Process -> Create ...
+- Add to Project
+- Import YAML / JSON - Copy / Paste the following template
+ .. https://raw.githubusercontent.com/kenthua/node-customers/demo/mysql-customer-persistent.yml
+- Create -> Process the template -> Continue -> Create
+- Add to Project
+- Import YAML / JSON - Copy / Paste the following template
+ .. https://raw.githubusercontent.com/kenthua/node-customers/demo/nodejs-template.yml
+- Create -> Process the template -> Continue -> Create
+- Test out the service: https://nodejs-customer-customers.cloudapps-{guid}.oslab.opentlc.com/customers
 
 OpenShift Deploy 3scale
 -----------------------
 - Create new project: `3scale-amp`
 - Add To Project
 - Import YAML/JSON
-  .. https://raw.githubusercontent.com/kenthua/3scale-amp-openshift-templates/2.0.0.GA-redhat-2-rhpds/amp/amp.yml
+ .. https://raw.githubusercontent.com/kenthua/3scale-amp-openshift-templates/2.0.0.GA-redhat-2-rhpds/amp/amp.yml
 - Create -> Process template -> Continue -> Add Parameters
-  .. `WILDCARD_DOMAIN=amp.cloudapps-{guid}.oslab.opentl.com`
-  .. `ADMIN_PASSWORD=passw0rd` 
+ .. `WILDCARD_DOMAIN=amp.cloudapps-{guid}.oslab.opentl.com`
+ .. `ADMIN_PASSWORD=passw0rd` 
 - Create
 - Wait for the pods to come up
 
@@ -41,9 +45,77 @@ OpenShift Access 3scale
 -----------------------
 - There is a route called: https://3scale-admin.amp.cloudapps-{guid}.oslab.opentlc.com
 - Login
-  .. Username: `admin`
-  .. Password: `passw0rd`
+ .. Username: `admin`
+ .. Password: `passw0rd`
+
+TIP: First time logging in, select the X above Signed in successfully
 
 3Scale: Modify the service to include your customer api
 -------------------------------------------------------
+- Select Top Nav - API -> Definition 
+- Under Methods
+ .. New method
+ .. Friendly name: `Get Customers`
+ .. System name: `get_customers`
+- Left Navigation
+ .. Integration
+ .. select `add the base URL of your API and save the configuration.`  
+- API header
+ .. Private base url: https://nodejs-customer-customers.cloudapps-{guid}.oslab.opentlc.com
+- Mapping Rules header
+ .. Add Mapping Rule
+ .... Verb: `GET`
+ .... Pattern: `/customers`
+ .... Metric or method: `get_customers`
+- Client header
+ .. API test GET request: `/customers`
 
+- Left Navigation
+ .. Integration
+ .. Select `Promote v. 2 to Production`
+ .. Test using the production api gateway
+ .... https://api-3scale-apicast-production.amp.cloudapps-{guid}.oslab.opentlc.com
+
+TIP: It may take a little bit of time ~5 mins for the configurations to sync into the production apicast gateway.
+
+- Left Navigation
+ .. Application Plans
+ .. Select Basic
+ .. Under Metrics, Methods & Limits
+ .... Select `Limits (0)` next to `Get Customers`
+ .... Select `New Usage Limit`
+ .... Period: `minute`
+ .... Max value: `5`
+
+- Test out the new limit
+ .. Try the url via the gateway 5 times
+ .. On the 6th time, you should get `Authentication failed` instead of a list of customers
+
+TIP: If you can go beyond your set limit, verify your mapping rule is correct.  Integration -> `edit APICast configuration`
+
+TIP: By default the initial Developer App has this default API service set to basic.
+
+Developer Portal
+----------------
+- Select Top Nav - `Developer Portal`
+- Select `Visit Developer Portal`
+- Thoughts:
+ .. Notice the 2 available plans, `Basic` and `Unlimited`
+ .. Developers can use this portal page to sign up
+- Click `DOCUMENTATION`
+
+Modify API Documentation
+------------------------
+- Select Top Nav - `API`
+- Select `ActiveDocs` (top left)
+- Select `Echo`
+- Select `Edit`
+  .. Name: Customers
+  .. API JSON Spec: Replace with this JSON swagger file
+  .. Modify the `host` key to reflect your appropriate guid
+- Update Service
+- Select the `customers` API method, and select `Try it out`
+
+TIP: You can try and test with your user key for the `customers` API method, but it will fail because of the insecure certificate.  If you take the curl command and add -k.
+
+- Refresh the `DOCUMENTATION` on the Developer Portal
