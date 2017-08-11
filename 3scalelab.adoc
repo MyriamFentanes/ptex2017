@@ -119,3 +119,18 @@ Modify API Documentation
 TIP: You can try and test with your user key for the `customers` API method, but it will fail because of the insecure certificate.  If you take the curl command and add -k.
 
 - Refresh the `DOCUMENTATION` on the Developer Portal
+
+Add A New Plan
+--------------
+- Select Top Nav - `API`
+- Select `Create Application Plan`
+  .. Name: `Gold`
+  .. System name: `gold`
+- Select `Create Application Plan`
+- Select `Gold`
+- Select `X` on `24/7 support`
+- Select `Update Application Plan`
+- Select `Publish` next to the `Gold` plan
+- Select Top Nav - `Developer Portal`
+- Select `Visit Developer Portal`
+  .. Notice the newly created `Gold` plan
