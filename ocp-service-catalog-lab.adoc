@@ -1,0 +1,16 @@
+OpenShift Container Platform 3.6 - Service Catalog Lab
+======================================================
+
+Environment Preparation
+-----------------------
+- RHPDS Login - https://rhpds.redhat.com
+- Navigate: Services -> Catalogs -> Labs -> xxxx
+- Wait for your provisioning confirmation email which contains the "guid"
+
+Initial Login
+-------------
+- Login to your openshift environment - https://master-{guid}.oslab.opentlc.com:8443
+- Credentials: 
+ .. Username: `developer`
+ .. Password: `developer`
+
