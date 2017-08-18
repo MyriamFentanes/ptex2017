@@ -106,3 +106,15 @@ TIP: Notice the application is not configured
 - Click on the route `http://mediawiki123-apb-example.apps.192.168.64.3.nip.io/` or refresh the application page
 
 TIP: Notice that it is configured
+
+APB Lab
+-------
+- `apb init org/my-new-apb`
+- `cd my-new-apb/`
+- `apb prepare`
+- `cat Dockerfile`
+- `apb build`
+- `apb push`
+- `apb list`
+
+TIP: Takes about 1 minute to show up in the service catalog
