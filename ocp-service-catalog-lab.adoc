@@ -14,3 +14,95 @@ Initial Login
  .. Username: `developer`
  .. Password: `developer`
 
+Template Service Binding
+------------------------
+- Create project `tsb-example`
+- Click project `tsb-example`
+- Click `Browse Catalog`
+- Search for `node` -> select `Node.js`
+ .. Application Name: `node`
+ .. Git Repository: `https://github.com/kenthua/nodejs-ex.git`
+ .. view advanced options
+ .... Git Reference: `tsb`
+ .... Click Create
+- Continue to overview
+- Click on the route `http://node-tsb-example.apps.192.168.64.3.nip.io`
+
+TIP: Notice that on the bottom right it says `No database configured`
+
+- Select Add to project
+ .. Browse Catalog
+- Search for `mongo` -> `MongoDB (Persistent)`
+ .. Click Next
+ .. `Do not bind at this time`
+ .. Click Create
+ .. Click View Project
+
+TIP: You could have it bind to the `node` application during the binding creation to inject the mongodb secrets into the node pod
+
+- Under `Provisioned Services` -> `MongoDB (Persistent)`
+ .. Create Binding
+ .. Create a secret and inject it into an application
+ .... Select an application
+ .... Select `node`
+ .... Click Bind
+ .... Click Close
+
+- Open up the `node` application down arrow
+ .. Notice `Service Bindings` for the MongoDB (Persistent)
+ .. Click `View Secret`
+ .. Click `Reveal Secret`
+
+TIP: Once the node app is redeployed, these secrets will be injected into the node pod
+
+- Applications -> Deployments 
+ .. Click `node`
+ .. Click `Deploy`
+ .. Click `Overview` to ensure that new pod is up and running
+
+- Click on the route `http://node-tsb-example.apps.192.168.64.3.nip.io` or refresh the application
+
+TIP: Notice the database is connected and page view counts are incrementing
+
+- Delete `tsb-example` project
+
+Ansible Playbook Bundle
+-----------------------
+- Create project `apb-example`
+- Click project `apb-example`
+- Click `Browse Catalog`
+- Search for `media` -> select `Mediawiki (APB)`
+ .. Mediawiki Admin User Password: `s3cretpw`
+ .. Click Create
+- Click View Project
+- Click on the route `http://mediawiki123-apb-example.apps.192.168.64.3.nip.io/`
+
+TIP: Notice the application is not configured
+
+- Click Add to Project -> Browse Catalog
+- Search for `post` -> select `PostgreSQL (APB)`
+ .. Development
+ .. Click Next
+ .. PostgreSQL Version: `9.5`
+ .. Click Next
+ .. `Do not bind at this time`
+ .. Click Create
+ .. Click View Project
+- Click View Project
+
+- Under `Provisioned Services` -> `PostgreSQL (APB)`
+ .. Create Binding
+ .. Create a secret and inject it into an application
+ .... Select an application
+ .... Select `mediawiki123`
+ .... Click Bind
+ .... Click Close
+
+- Applications -> Deployments 
+ .. Click `mediawiki123`
+ .. Click `Deploy`
+ .. Click `Overview` to ensure that new pod is up and running
+
+- Click on the route `http://mediawiki123-apb-example.apps.192.168.64.3.nip.io/` or refresh the application page
+
+TIP: Notice that it is configured
