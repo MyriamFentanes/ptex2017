@@ -55,10 +55,10 @@ TIP: You could have it bind to the `node` application during the binding creatio
 
 TIP: Once the node app is redeployed, these secrets will be injected into the node pod
 
-- Applications -> Deployments 
- .. Click `node`
+- Under APPLICATION `node` 
+ .. Click kebab menu
  .. Click `Deploy`
- .. Click `Overview` to ensure that new pod is up and running
+ .. Wait for the new pod come up
 
 - Click on the route `http://node-tsb-example.apps.192.168.64.3.nip.io` or refresh the application
 
@@ -98,10 +98,10 @@ TIP: Notice the application is not configured
  .... Click Bind
  .... Click Close
 
-- Applications -> Deployments 
- .. Click `mediawiki123`
+- Under APPLICATION `mediawiki123`
+ .. Click kebab menu item
  .. Click `Deploy`
- .. Click `Overview` to ensure that new pod is up and running
+ .. Wait for the new pod come up
 
 - Click on the route `http://mediawiki123-apb-example.apps.192.168.64.3.nip.io/` or refresh the application page
 
