@@ -1,5 +1,5 @@
-3scale Lab
-==========
+3scale Labs
+===========
 
 Environment Preparation
 -----------------------

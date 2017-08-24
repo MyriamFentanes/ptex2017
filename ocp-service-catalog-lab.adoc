@@ -1,10 +1,10 @@
-OpenShift Container Platform 3.6 - Service Catalog Lab
-======================================================
+OpenShift Container Platform 3.6 - Service Catalog Labs
+=======================================================
 
 Environment Preparation
 -----------------------
 - RHPDS Login - https://rhpds.redhat.com
-- Navigate: Services -> Catalogs -> Labs -> xxxx
+- Navigate: Services -> Catalogs -> Labs -> OCP 3.6 Service Catalog
 - Wait for your provisioning confirmation email which contains the "guid"
 
 Initial Login
@@ -22,49 +22,54 @@ Template Service Binding
 - Search for `node` -> select `Node.js`
  .. Application Name: `node`
  .. Git Repository: `https://github.com/kenthua/nodejs-ex.git`
- .. view advanced options
+ .. Click `advanced options`
  .... Git Reference: `tsb`
  .... Click Create
-- Continue to overview
-- Click on the route `http://node-tsb-example.apps.192.168.64.3.nip.io`
+- Click Continue to overview
+- Click on the arrow next to DEPLOYMENT `node` to expand
+
+TIP: It will take some time for the node application to build and deploy, you can watch the build on the screen.
+
+- Click on the route `http://node-tsb-example.cloudapps-{guid}.oslab.opentlc.com`
 
 TIP: Notice that on the bottom right it says `No database configured`
 
-- Select Add to project
- .. Browse Catalog
+- Click Add to project -> Browse Catalog
 - Search for `mongo` -> `MongoDB (Persistent)`
  .. Click Next
- .. `Do not bind at this time`
+ .. Leave the radio button on `Do not bind at this time`
  .. Click Create
  .. Click View Project
+- Click on the arrow next to DEPLOYMENT `mongodb` to expand
 
 TIP: You could have it bind to the `node` application during the binding creation to inject the mongodb secrets into the node pod
 
 - Under `Provisioned Services` -> `MongoDB (Persistent)`
  .. Create Binding
  .. Create a secret and inject it into an application
- .... Select an application
+ .... Click `Select an application`
  .... Select `node`
  .... Click Bind
  .... Click Close
 
-- Open up the `node` application down arrow
+- Open up the `node` application down arrow (if not already open)
  .. Notice `Service Bindings` for the MongoDB (Persistent)
  .. Click `View Secret`
  .. Click `Reveal Secret`
 
 TIP: Once the node app is redeployed, these secrets will be injected into the node pod
 
-- Under APPLICATION `node` 
+- Click `Overview`
+- In APPLICATION `node` 
  .. Click kebab menu
  .. Click `Deploy`
  .. Wait for the new pod come up
 
-- Click on the route `http://node-tsb-example.apps.192.168.64.3.nip.io` or refresh the application
+TIP: On the new deploy, the secret is injected into the new pod as environment variables.
+
+- Click on the route `http://node-tsb-example.cloudapps-{guid}.oslab.opentlc.com` or refresh the application
 
 TIP: Notice the database is connected and page view counts are incrementing
-
-- Delete `tsb-example` project
 
 Ansible Playbook Bundle
 -----------------------
@@ -72,43 +77,51 @@ Ansible Playbook Bundle
 - Click project `apb-example`
 - Click `Browse Catalog`
 - Search for `media` -> select `Mediawiki (APB)`
- .. Mediawiki Admin User Password: `s3cretpw`
+ .. Mediawiki Admin User Password: `passw0rd`
  .. Click Create
 - Click View Project
-- Click on the route `http://mediawiki123-apb-example.apps.192.168.64.3.nip.io/`
 
-TIP: Notice the application is not configured
+TIP: Notice the `apb` prefixed pod starting up.  This is the ansible playbook bundle starting up to execute the ansible playbook.
 
 - Click Add to Project -> Browse Catalog
 - Search for `post` -> select `PostgreSQL (APB)`
- .. Development
- .. Click Next
  .. PostgreSQL Version: `9.5`
  .. Click Next
- .. `Do not bind at this time`
+ .. Leave the radio button on `Do not bind at this time`
  .. Click Create
  .. Click View Project
-- Click View Project
+
+- Click on the route `http://mediawiki123-apb-example.cloudapps-{guid}.oslab.opentlc.com`
+
+TIP: Notice the application is not configured
 
 - Under `Provisioned Services` -> `PostgreSQL (APB)`
  .. Create Binding
  .. Create a secret and inject it into an application
- .... Select an application
+ .... Click `Select an application`
  .... Select `mediawiki123`
  .... Click Bind
  .... Click Close
+- Wait for the DEPLOYMENT `postgresql` to complete.
+- Verify that the service binding is complete.  The `View Secret` should be available when ready.
 
 - Under APPLICATION `mediawiki123`
  .. Click kebab menu item
  .. Click `Deploy`
  .. Wait for the new pod come up
 
-- Click on the route `http://mediawiki123-apb-example.apps.192.168.64.3.nip.io/` or refresh the application page
+TIP: Just like the `Template Service Broker`, on the new deploy, the secret is injected into the new pod as environment variables.
+
+- Click on the route `http://mediawiki123-apb-example.cloudapps-{guid}.oslab.opentlc.com` or refresh the application page
 
 TIP: Notice that it is configured
 
-APB Lab
--------
+APB Lab (locally - via oc cluster up)
+-------------------------------------
+- Login to openshift via `oc`
+
+TIP: This is how the apb client is able to communicate with the ansible service broker on your openshift intance.
+
 - `apb init org/my-new-apb`
 - `cd my-new-apb/`
 - `apb prepare`
