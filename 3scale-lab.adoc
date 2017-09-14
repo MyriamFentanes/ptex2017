@@ -34,7 +34,7 @@ OpenShift Deploy 3scale
 - Import YAML/JSON
  .. https://raw.githubusercontent.com/kenthua/3scale-amp-openshift-templates/2.0.0.GA-redhat-2-rhpds/amp/amp.yml
 - Create -> Process template -> Continue -> Add Parameters
- .. `WILDCARD_DOMAIN=amp.cloudapps-{guid}.oslab.opentl.com`
+ .. `WILDCARD_DOMAIN=amp.cloudapps-{guid}.oslab.opentlc.com`
  .. `ADMIN_PASSWORD=passw0rd` 
 - Create
 - Wait for the pods to come up
