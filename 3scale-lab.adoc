@@ -4,7 +4,7 @@
 Environment Preparation
 -----------------------
 - RHPDS Login - https://rhpds.redhat.com
-- Navigate: Services -> Catalogs -> Labs -> 3scale OpenShift
+- Navigate: Services -> Catalogs -> Partner Tech Exchange -> 3scale API Management Lab - OCP
 - Wait for your provisioning confirmation email which contains the "guid"
 
 Initial Login

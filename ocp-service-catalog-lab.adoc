@@ -4,7 +4,7 @@ OpenShift Container Platform 3.6 - Service Catalog Labs
 Environment Preparation
 -----------------------
 - RHPDS Login - https://rhpds.redhat.com
-- Navigate: Services -> Catalogs -> Labs -> OCP 3.6 Service Catalog
+- Navigate: Services -> Catalogs -> Partner Tech Exchange -> OCP 3.6 - Service Catalog
 - Wait for your provisioning confirmation email which contains the "guid"
 
 Initial Login
